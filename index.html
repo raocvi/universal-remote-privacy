@@ -614,7 +614,17 @@ function showLang(l) {
   LANGS.forEach(function(code) {
     document.getElementById(code).style.display = (code === l) ? 'block' : 'none';
   });
+  var select = document.getElementById('lang-select');
+  if (select) select.value = l;
 }
+
+// Idioma inicial: ?lang=xx en la URL (la app lo manda) → si no, español por defecto
+(function initLang() {
+  var params = new URLSearchParams(window.location.search);
+  var fromUrl = params.get('lang');
+  var initial = (fromUrl && LANGS.indexOf(fromUrl) !== -1) ? fromUrl : 'es';
+  showLang(initial);
+})();
 </script>
 
 </body>
